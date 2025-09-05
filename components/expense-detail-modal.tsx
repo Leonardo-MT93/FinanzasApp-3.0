@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Edit, Trash2 } from "lucide-react"
 import type { Expense } from "@/lib/types"
@@ -43,7 +44,10 @@ export function ExpenseDetailModal({ expense, open, onOpenChange, onEdit }: Expe
         installment_data: {
           ...expense.installment_data,
           total_installments: newTotal,
+          total_amount: expense.installment_data?.total_amount || expense.amount * newTotal,
           installment_value: expense.installment_data?.total_amount ? expense.installment_data.total_amount / newTotal : expense.amount,
+          current_installment: expense.installment_data?.current_installment || 1,
+          first_payment_date: expense.installment_data?.first_payment_date || new Date(),
         },
       })
     }
@@ -84,6 +88,12 @@ export function ExpenseDetailModal({ expense, open, onOpenChange, onEdit }: Expe
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="p-0 max-w-sm mx-auto h-full max-h-screen overflow-hidden">
+          <VisuallyHidden>
+            <DialogTitle>Detalle del Gasto</DialogTitle>
+            <DialogDescription>
+              Ver y editar los detalles del gasto seleccionado
+            </DialogDescription>
+          </VisuallyHidden>
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b bg-background">
@@ -95,16 +105,16 @@ export function ExpenseDetailModal({ expense, open, onOpenChange, onEdit }: Expe
               </div>
               <div className="flex gap-1">
                 <Button variant="ghost" size="sm" onClick={handleEdit} className="h-8 w-8 p-0">
-                  <Edit className="w-4 h-4" />
+                  <Edit className="w-4 h-4 mr-16" />
                 </Button>
-                <Button
+                {/* <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleDelete}
                   className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                 >
                   <Trash2 className="w-4 h-4" />
-                </Button>
+                </Button> */}
               </div>
             </div>
 

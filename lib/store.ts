@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
 import type { User, Expense, CreditCard, MonthlyGoal, Category } from "./types"
 
 interface ExpenseStore {
@@ -160,6 +160,45 @@ export const useExpenseStore = create<ExpenseStore>()(
     }),
     {
       name: "expense-tracker-storage",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        user: state.user,
+        expenses: state.expenses,
+        creditCards: state.creditCards,
+        monthlyGoals: state.monthlyGoals,
+        categories: state.categories,
+        // No persistir activeTab para que siempre inicie en "/"
+      }),
+      // Configurar rehidratación para manejar fechas
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          // Convertir strings de fecha a objetos Date
+          if (state.user?.created_at && typeof state.user.created_at === 'string') {
+            state.user.created_at = new Date(state.user.created_at)
+          }
+          if (state.user?.updated_at && typeof state.user.updated_at === 'string') {
+            state.user.updated_at = new Date(state.user.updated_at)
+          }
+          
+          // Convertir fechas en gastos
+          state.expenses = state.expenses.map(expense => ({
+            ...expense,
+            date: new Date(expense.date),
+            created_at: new Date(expense.created_at),
+            updated_at: new Date(expense.updated_at),
+            installment_data: expense.installment_data ? {
+              ...expense.installment_data,
+              first_payment_date: new Date(expense.installment_data.first_payment_date)
+            } : undefined
+          }))
+          
+          // Convertir fechas en tarjetas
+          state.creditCards = state.creditCards.map(card => ({
+            ...card,
+            created_at: new Date(card.created_at)
+          }))
+        }
+      },
     },
   ),
 )

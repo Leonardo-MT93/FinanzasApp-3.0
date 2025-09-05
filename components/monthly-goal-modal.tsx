@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { Target, TrendingUp, TrendingDown } from "lucide-react"
 import { useExpenseStore } from "@/lib/store"
@@ -82,6 +82,9 @@ export function MonthlyGoalModal() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Objetivo Mensual</DialogTitle>
+          <DialogDescription>
+            Establece y monitorea tu objetivo de gastos para mantener el control de tu presupuesto.
+          </DialogDescription>
         </DialogHeader>
 
         {!currentGoal ? (

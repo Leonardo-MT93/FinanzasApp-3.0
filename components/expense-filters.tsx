@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Filter, Search } from "lucide-react"
@@ -66,6 +66,9 @@ export function ExpenseFilters({
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Filtros de Gastos</DialogTitle>
+              <DialogDescription>
+                Filtra tus gastos por categoría, fecha y monto.
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">

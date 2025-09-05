@@ -1,8 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
 import { useExpenseStore } from "@/lib/store"
-import { mockUser, mockCreditCards, mockExpenses } from "@/lib/mock-data"
 import { BalanceCard } from "@/components/balance-card"
 import { AlertCard } from "@/components/alert-card"
 import { RecentExpenses } from "@/components/recent-expenses"
@@ -12,19 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Edit3 } from "lucide-react"
 
 export default function HomePage() {
-  const { user, expenses, creditCards, setUser, addExpense, addCreditCard } = useExpenseStore()
-
-  useEffect(() => {
-    if (!user) {
-      setUser(mockUser)
-    }
-    if (expenses.length === 0) {
-      mockExpenses.forEach(addExpense)
-    }
-    if (creditCards.length === 0) {
-      mockCreditCards.forEach(addCreditCard)
-    }
-  }, [user, expenses.length, creditCards.length, setUser, addExpense, addCreditCard])
+  const { user, expenses, creditCards } = useExpenseStore()
 
   const currentMonthExpenses = expenses
     .filter((expense) => {

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
 import { Calendar } from "lucide-react"
@@ -61,6 +61,9 @@ export function FutureSummaryModal() {
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Resumen Futuro - Próximo Mes</DialogTitle>
+          <DialogDescription>
+            Proyección de tus gastos fijos para el próximo mes basada en suscripciones y cuotas pendientes.
+          </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="pesos" className="w-full">

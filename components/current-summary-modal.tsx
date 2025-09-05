@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { BarChart3, TrendingUp, TrendingDown } from "lucide-react"
 import { useExpenseStore } from "@/lib/store"
@@ -73,6 +73,9 @@ export function CurrentSummaryModal() {
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Resumen Detallado - Mes Actual</DialogTitle>
+          <DialogDescription>
+            Análisis completo de tus gastos del mes en curso con comparación mensual.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">

@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -43,7 +44,7 @@ export function ExpenseEditModal({ expense, open, onOpenChange }: ExpenseEditMod
       setPaymentMethod(expense.payment_method)
       setSelectedCard(expense.card_id || "")
       setIsShared(expense.is_shared)
-      setInstallments(expense.total_installments || 1)
+      setInstallments(expense.installment_data?.total_installments || 1)
 
       const expenseDate = expense.date instanceof Date ? expense.date : new Date(expense.date)
       setDate(expenseDate.toISOString().split("T")[0])
@@ -63,9 +64,14 @@ export function ExpenseEditModal({ expense, open, onOpenChange }: ExpenseEditMod
       card_id: paymentMethod === "credit" ? selectedCard : undefined,
       is_shared: isShared,
       date: new Date(date),
-      type: installments > 1 ? "installment" : "single",
-      total_installments: installments > 1 ? installments : undefined,
-      total_amount: installments > 1 ? Number(amount) * installments : undefined,
+      expense_type: installments > 1 ? "installment" : "single",
+      installment_data: installments > 1 ? {
+        total_installments: installments,
+        total_amount: Number(amount) * installments,
+        installment_value: Number(amount),
+        current_installment: expense.installment_data?.current_installment || 1,
+        first_payment_date: expense.installment_data?.first_payment_date || new Date(date),
+      } : undefined,
     }
 
     updateExpense(expense.id, updatedExpense)
@@ -83,6 +89,12 @@ export function ExpenseEditModal({ expense, open, onOpenChange }: ExpenseEditMod
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="p-0 max-w-sm mx-auto max-h-[90vh] overflow-hidden">
+        <VisuallyHidden>
+          <DialogTitle>Editar Gasto</DialogTitle>
+          <DialogDescription>
+            Modificar los detalles del gasto seleccionado
+          </DialogDescription>
+        </VisuallyHidden>
         <div className="flex flex-col max-h-[90vh]">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b bg-background flex-shrink-0">

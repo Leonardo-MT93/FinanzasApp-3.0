@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import type { CreditCard, CardBrand } from "@/lib/types"
 import { useExpenseStore } from "@/lib/store"
 
@@ -82,6 +82,9 @@ export function AddCardForm({ isOpen, onClose }: AddCardFormProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Agregar Tarjeta</DialogTitle>
+          <DialogDescription>
+            Agrega una nueva tarjeta de crédito a tu billetera digital.
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
